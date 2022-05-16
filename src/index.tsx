@@ -9,13 +9,17 @@ import '@fontsource/roboto/vietnamese-700.css';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
 import { BrowserRouter } from "react-router-dom";
+import { store } from './store';
+import { Provider } from 'react-redux';
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
+        <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <App />
             </ThemeProvider>
+        </Provider>
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
