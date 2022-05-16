@@ -1,10 +1,14 @@
-import * as React from 'react';
-import { Button } from '@mui/material';
+import React from 'react';
+import { Counter } from './features/counter/Counter';
 
-export default function App() {
+function App() {
   return (
-    <Button variant="contained" color="primary">
-      Hello World
-    </Button>
+    <div className="App">
+      <header className="App-header">
+        <Counter />
+      </header>
+    </div>
   );
 }
+
+export default App;
