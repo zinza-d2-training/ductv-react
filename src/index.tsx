@@ -11,18 +11,20 @@ import theme from './theme';
 import { BrowserRouter } from "react-router-dom";
 import { store } from './store';
 import { Provider } from 'react-redux';
+import { CssBaseline } from '@mui/material'
 
 ReactDOM.render(
-    <React.StrictMode>
-        <BrowserRouter>
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>
-                <App />
-            </ThemeProvider>
-        </Provider>
-        </BrowserRouter>
-    </React.StrictMode>,
-    document.getElementById('root')
+	<React.StrictMode>
+		<BrowserRouter>
+			<Provider store={store}>
+				<ThemeProvider theme={theme}>
+					<CssBaseline />
+					<App />
+				</ThemeProvider>
+			</Provider>
+		</BrowserRouter>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
