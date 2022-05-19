@@ -1,5 +1,5 @@
-const MockAdapter = require('axios-mock-adapter')
+const MockAdapter = require('axios-mock-adapter');
 const axios = require('axios');
 
-const Mock = new MockAdapter(axios)
-export default Mock
+const Mock = new MockAdapter(axios);
+export default Mock;

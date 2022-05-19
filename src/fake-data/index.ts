@@ -1,4 +1,4 @@
-import Mock from "./mock";
-import './data/auth'
+import Mock from './mock';
+import './data/auth';
 
-Mock.onAny().passThrough()
+Mock.onAny().passThrough();
