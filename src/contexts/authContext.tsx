@@ -2,41 +2,12 @@ import React, { createContext, useEffect, useReducer } from 'react'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 import Loading from '../components/Loading/Loading'
+import { myToken, CounterState, CounterAction, CountActionType, UserCtx } from '../types'
 
 const initialState = {
 	isAuthenticated: false,
 	isInitialized: false,
 	user: null
-}
-
-interface myToken {
-	name: string;
-	exp: number;
-}
-
-// An enum with all the types of actions to use in our reducer
-enum CountActionType {
-	INIT = 'INIT',
-	LOGIN = 'LOGIN',
-}
-
-interface CountActionPayload {
-	isAuthenticated?: boolean,
-	isInitialized?: boolean,
-	user?: null
-}
-
-// An interface for our state
-interface CounterState {
-	isAuthenticated?: boolean,
-	isInitialized?: boolean,
-	user?: null
-}
-
-//An interface for our action
-interface CounterAction {
-	type: CountActionType,
-	payload: CountActionPayload;
 }
 
 const isValidToken = (accessToken: string) => {
@@ -45,12 +16,12 @@ const isValidToken = (accessToken: string) => {
 	}
 
 	const decodedToken = jwtDecode<myToken>(accessToken);
-	const currentTime = Date.now() / 1000;
-	return decodedToken.exp > currentTime
+	const currentTime = new Date().getTime() / 1000;
+	const exp = new Date(decodedToken.exp).getTime() / 1000;
+	return exp > currentTime
 }
 
 const setSession = (accessToken: string) => {
-	localStorage.setItem('check', '123');
 	if (accessToken) {
 		localStorage.setItem('accessToken', accessToken)
 		axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
@@ -82,18 +53,9 @@ const reducer = (state: CounterState, action: CounterAction) => {
 				user,
 			}
 		}
-		default: {
-			throw new Error('Unknown action type');
-		}
+		default:
+			return state;
 	}
-}
-
-interface UserCtx {
-	isAuthenticated?: boolean,
-	isInitialized?: boolean,
-	user?: null,
-	method: string,
-	login: (email: string, password: string) => Promise<void>
 }
 
 const AuthContext = createContext<UserCtx>({
@@ -105,8 +67,6 @@ const AuthContext = createContext<UserCtx>({
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const login = async (email: string, password: string) => {
-
-
 		const response = await axios.post('/api/auth/login', {
 			email,
 			password,
@@ -124,16 +84,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	}
 
 	useEffect(() => {
-		console.log(1234);
-
 		(async () => {
 			const accessToken = window.localStorage.getItem('accessToken')
+
 			try {
 				if (accessToken && isValidToken(accessToken)) {
 					setSession(accessToken)
 					const response = await axios.get('/api/auth/profile')
 					const { user } = response.data
-
 					dispatch({
 						type: CountActionType.INIT,
 						payload: {
@@ -151,7 +109,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					})
 				}
 			} catch (err) {
-				console.error(err)
 				dispatch({
 					type: CountActionType.INIT,
 					payload: {
@@ -167,8 +124,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	if (!state.isInitialized) {
 		return <Loading />
 	}
-
-
 
 	return (
 		<AuthContext.Provider

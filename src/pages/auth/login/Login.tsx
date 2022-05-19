@@ -36,18 +36,18 @@ const LoginComponent = () => {
 	const { login } = useAuth();
 	const onSubmit = async (data: IFormInputs) => {
 		setLoading(true);
+		setMessage('');
 		try {
-			const result = await login(data.email, data.password);
-			console.log(result);
+			await login(data.email, data.password);
 
 			navigate('/')
 		} catch (e: any) {
-			setMessage(e.message)
+			setMessage('Invalid email or password')
 			setLoading(false)
+			console.log(e);
+
 		}
 	};
-
-	// const onSubmit =
 
 	const validationSchema = Yup.object().shape({
 		email: Yup.string()
@@ -111,10 +111,11 @@ const LoginComponent = () => {
 							autoFocus
 							{...register('email')}
 							error={errors.email ? true : false}
+							onChange={() => setMessage('')}
 						/>
 						{
 							errors.email?.message && (
-								<Typography variant="subtitle1" color="error">
+								<Typography variant="body1" color="error">
 									{errors.email?.message}
 								</Typography>
 							)
@@ -128,27 +129,21 @@ const LoginComponent = () => {
 							id="password"
 							{...register('password')}
 							error={errors.password ? true : false}
+							onChange={() => setMessage('')}
 						/>
-						{
-							errors.password?.message && (
-								<Typography variant="subtitle1" color="error">
-									{errors.password?.message}
-								</Typography>
-							)
-						}
-						{message && (
-							<Typography variant="subtitle1" color="error">
-								{message}
-							</Typography>
-						)}
-
+						<Typography variant="body1" color="error">
+							{errors.password?.message}
+						</Typography>
+						<Typography variant="body1" color="error">
+							{message}
+						</Typography>
 						<Button
 							type="submit"
 							fullWidth
 							variant="contained"
 							color="success"
 							sx={{ mt: 3, mb: 2 }}
-							disabled={loading && errors.password && errors.email ? true : false}
+							disabled={loading || errors.password || errors.email ? true : false}
 						>
 							Đăng Nhập
 						</Button>

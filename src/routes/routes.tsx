@@ -4,8 +4,21 @@ import ForgotPassword from "../pages/auth/ForgotPassword";
 import Login from "../pages/auth/login/Login";
 import Register from "../pages/auth/Register/Register";
 import Home from "../pages/Home";
+import AuthGuard from '../auth/AuthGuard'
+import Layouts from "../components/Layouts";
 
 export const AllPages: RouteObject[] = [
+	{
+		element: (
+			<AuthGuard>
+				<Layouts />
+			</AuthGuard>
+		),
+		children: [{
+			path: '/',
+			element: <Home />
+		}],
+	},
 	{
 		path: '/login',
 		element: <Login />,
@@ -18,8 +31,5 @@ export const AllPages: RouteObject[] = [
 		path: '/forgot-password',
 		element: <ForgotPassword />,
 	},
-	{
-		path: '/',
-		element: <Home />
-	}
+
 ];
