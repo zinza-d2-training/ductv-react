@@ -1,10 +1,11 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 
 const ForgotPassword = () => {
   return (
-    <>
-      <h1>Hello ForgotPassword</h1>
-    </>
+    <Typography variant="h2" gutterBottom component="div">
+      Forgot Password
+    </Typography>
   );
 };
 

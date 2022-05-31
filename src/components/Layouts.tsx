@@ -2,11 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 const Layouts = () => {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 
 export default Layouts;

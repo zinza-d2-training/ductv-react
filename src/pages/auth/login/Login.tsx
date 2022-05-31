@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Link as LinkRoute, useNavigate } from 'react-router-dom';
-
-import {
-  TextField,
-  Button,
-  Paper,
-  Box,
-  Grid,
-  Typography,
-  CssBaseline
-} from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { TextField, Button, Paper, Box, Grid, Typography } from '@mui/material';
 import useAuth from '../../../hooks/useAuth';
 
 interface IFormInputs {
@@ -30,13 +22,12 @@ const LoginComponent = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { signIn } = useAuth();
   const onSubmit = async (data: IFormInputs) => {
     setLoading(true);
     setMessage('');
     try {
-      await login(data.email, data.password);
-
+      await signIn(data.email, data.password);
       navigate('/');
     } catch (e: any) {
       setMessage('Invalid email or password');
@@ -49,14 +40,14 @@ const LoginComponent = () => {
     email: Yup.string().required('Email is required').email('Email is valid'),
     password: Yup.string()
       .trim('The password cannot include leading and trailing spaces')
-      .strict(true)
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters')
   });
+
   const {
-    register,
     handleSubmit,
-    formState: { errors }
+    control,
+    formState: { errors, isValid }
   } = useForm<IFormInputs>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -64,9 +55,9 @@ const LoginComponent = () => {
       password: '12345678'
     }
   });
+
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
-      <CssBaseline />
       <Grid
         item
         xs={false}
@@ -99,51 +90,58 @@ const LoginComponent = () => {
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             sx={{ mt: 1 }}>
-            <TextField
-              required
-              margin="normal"
-              fullWidth
-              id="email"
-              label="Email Address"
-              autoComplete="email"
-              autoFocus
-              {...register('email')}
-              error={errors.email ? true : false}
-              onChange={() => setMessage('')}
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange } }) => (
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  label="Email Address"
+                  autoComplete="email"
+                  autoFocus
+                  id="email"
+                  error={errors.email ? true : false}
+                  helperText={errors.email?.message}
+                  onChange={(event) => {
+                    onChange(event.target.value);
+                    setMessage('');
+                  }}
+                />
+              )}
             />
-            {errors.email?.message && (
-              <Typography variant="body1" color="error">
-                {errors.email?.message}
-              </Typography>
-            )}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              type="password"
-              id="password"
-              {...register('password')}
-              error={errors.password ? true : false}
-              onChange={() => setMessage('')}
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange } }) => (
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  id="password"
+                  error={errors.password ? true : false}
+                  helperText={errors.password?.message}
+                  onChange={(event) => {
+                    onChange(event.target.value);
+                    setMessage('');
+                  }}
+                />
+              )}
             />
-            <Typography variant="body1" color="error">
-              {errors.password?.message}
-            </Typography>
             <Typography variant="body1" color="error">
               {message}
             </Typography>
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               color="success"
               sx={{ mt: 3, mb: 2 }}
-              disabled={
-                loading || errors.password || errors.email ? true : false
-              }>
+              disabled={!isValid || loading}
+              loading={loading}>
               Đăng Nhập
-            </Button>
+            </LoadingButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <LinkRoute to="/forgot-password">{'Quên mật khẩu?'}</LinkRoute>

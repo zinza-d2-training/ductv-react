@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 
@@ -6,9 +7,15 @@ const Home = () => {
 
   return (
     <>
-      <h1>Hello {user?.name}</h1>
-      <h1>email: {user?.email}</h1>
-      <h1>age: {user?.age}</h1>
+      <Typography variant="h4" component="div" gutterBottom>
+        Hello {user?.name}
+      </Typography>
+      <Typography variant="h4" component="div" gutterBottom>
+        email: {user?.email}
+      </Typography>
+      <Typography variant="h4" component="div" gutterBottom>
+        age: {user?.age}
+      </Typography>
     </>
   );
 };

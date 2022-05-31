@@ -1,20 +1,12 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import React, { createContext, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { init, login } from '../pages/auth/authSlice';
+import { selectStateAuth } from '../pages/auth/authSlice';
+import { useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import Loading from '../components/Loading/Loading';
-import {
-  myToken,
-  CounterState,
-  CounterAction,
-  CountActionType,
-  UserCtx
-} from '../types';
-
-const initialState = {
-  isAuthenticated: false,
-  isInitialized: false,
-  user: null
-};
+import { myToken, UserCtx } from '../types';
 
 const isValidToken = (accessToken: string) => {
   if (!accessToken) {
@@ -37,105 +29,65 @@ const setSession = (accessToken: string) => {
   }
 };
 
-const reducer = (state: CounterState, action: CounterAction) => {
-  const { type, payload } = action;
-  switch (type) {
-    case CountActionType.INIT: {
-      const { isAuthenticated, user } = payload;
-
-      return {
-        ...state,
-        isAuthenticated,
-        isInitialized: true,
-        user
-      };
-    }
-    case CountActionType.LOGIN: {
-      const { user } = payload;
-
-      return {
-        ...state,
-        isAuthenticated: true,
-        user
-      };
-    }
-    default:
-      return state;
-  }
-};
-
 const AuthContext = createContext<UserCtx>({
-  ...initialState,
-  method: 'JWT',
-  login: () => Promise.resolve()
+  signIn: () => Promise.resolve()
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const login = async (email: string, password: string) => {
+  const dispatch = useDispatch();
+
+  const signIn = async (email: string, password: string) => {
     const response = await axios.post('/api/auth/login', {
       email,
       password
     });
     const { accessToken, user } = response.data;
-
     setSession(accessToken);
-
-    dispatch({
-      type: CountActionType.LOGIN,
-      payload: {
-        user
-      }
-    });
+    dispatch(login({ user }));
   };
-
   useEffect(() => {
     (async () => {
       const accessToken = window.localStorage.getItem('accessToken');
-
       try {
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
           const response = await axios.get('/api/auth/profile');
           const { user } = response.data;
-          dispatch({
-            type: CountActionType.INIT,
-            payload: {
-              isAuthenticated: true,
-              user
-            }
-          });
+          dispatch(
+            init({
+              user: user,
+              isAuthenticated: true
+            })
+          );
         } else {
-          dispatch({
-            type: CountActionType.INIT,
-            payload: {
-              isAuthenticated: false,
-              user: null
-            }
-          });
+          dispatch(
+            init({
+              user: null,
+              isAuthenticated: false
+            })
+          );
         }
       } catch (err) {
-        dispatch({
-          type: CountActionType.INIT,
-          payload: {
+        dispatch(
+          init({
             isAuthenticated: false,
             user: null
-          }
-        });
+          })
+        );
       }
     })();
   }, []);
 
-  if (!state.isInitialized) {
+  const stateAuth = useSelector(selectStateAuth);
+  if (!stateAuth?.isInitialized) {
     return <Loading />;
   }
 
   return (
     <AuthContext.Provider
       value={{
-        ...state,
-        method: 'JWT',
-        login
+        ...stateAuth,
+        signIn
       }}>
       {children}
     </AuthContext.Provider>

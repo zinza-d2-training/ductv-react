@@ -1,6 +1,6 @@
 import Mock from '../mock';
 import jwtDecode from 'jwt-decode';
-import { myToken } from '../../types';
+import { myToken, UserList } from '../../types';
 
 const jwtEncode = require('jwt-encode');
 
@@ -9,7 +9,7 @@ const date = new Date();
 date.setDate(date.getDate() + 7);
 const JWT_EXPIRES_IN = date;
 
-const userList = [
+const userList: UserList[] = [
   {
     id: 1,
     name: 'Duc admin',

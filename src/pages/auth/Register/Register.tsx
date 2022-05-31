@@ -1,10 +1,11 @@
+import { Typography } from '@mui/material';
 import React from 'react';
 
 const Register = () => {
   return (
-    <>
-      <h1>Hello Register</h1>
-    </>
+    <Typography variant="h2" gutterBottom component="div">
+      Hello Register
+    </Typography>
   );
 };
 
