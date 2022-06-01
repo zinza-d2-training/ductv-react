@@ -27,7 +27,7 @@ const ForgotPassword = () => {
     navigate('/login');
   };
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email is valid')
+    email: Yup.string().required('Email is required').email('Email is invalid')
   });
   const {
     handleSubmit,
@@ -121,7 +121,7 @@ const ForgotPassword = () => {
                 color="primary"
                 disabled={!isValid}
                 loading={loading}>
-                Đăng Nhập
+                Gửi
               </LoadingButton>
             </Stack>
           </Box>
