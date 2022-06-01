@@ -31,7 +31,7 @@ const Login = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required('Email is required').email('Email is valid'),
+    email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
       .trim('The password cannot include leading and trailing spaces')
       .required('Password is required')
@@ -44,6 +44,7 @@ const Login = () => {
     formState: { isValid }
   } = useForm<IFormInputs>({
     resolver: yupResolver(validationSchema),
+    mode: 'onChange',
     defaultValues: {
       email: 'admin@gmail.com',
       password: '12345678'
