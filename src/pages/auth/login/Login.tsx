@@ -44,6 +44,7 @@ const Login = () => {
     formState: { isValid }
   } = useForm<IFormInputs>({
     resolver: yupResolver(validationSchema),
+    mode: 'onChange',
     defaultValues: {
       email: 'admin@gmail.com',
       password: '12345678'
