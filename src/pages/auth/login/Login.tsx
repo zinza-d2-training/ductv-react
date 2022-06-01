@@ -13,12 +13,6 @@ interface IFormInputs {
 }
 
 const Login = () => {
-  return <LoginComponent />;
-};
-
-export default Login;
-
-const LoginComponent = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
@@ -29,7 +23,7 @@ const LoginComponent = () => {
     try {
       await signIn(data.email, data.password);
       navigate('/');
-    } catch (e: any) {
+    } catch (e) {
       setMessage('Invalid email or password');
       setLoading(false);
       console.log(e);
@@ -47,7 +41,7 @@ const LoginComponent = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid }
+    formState: { isValid }
   } = useForm<IFormInputs>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
@@ -93,7 +87,7 @@ const LoginComponent = () => {
             <Controller
               control={control}
               name="email"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange }, fieldState: { error } }) => (
                 <TextField
                   margin="normal"
                   fullWidth
@@ -101,8 +95,8 @@ const LoginComponent = () => {
                   autoComplete="email"
                   autoFocus
                   id="email"
-                  error={errors.email ? true : false}
-                  helperText={errors.email?.message}
+                  error={!!error}
+                  helperText={error?.message}
                   onChange={(event) => {
                     onChange(event.target.value);
                     setMessage('');
@@ -113,15 +107,15 @@ const LoginComponent = () => {
             <Controller
               control={control}
               name="password"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange }, fieldState: { error } }) => (
                 <TextField
                   margin="normal"
                   fullWidth
                   label="Password"
                   type="password"
                   id="password"
-                  error={errors.password ? true : false}
-                  helperText={errors.password?.message}
+                  error={!!error}
+                  helperText={error?.message}
                   onChange={(event) => {
                     onChange(event.target.value);
                     setMessage('');
@@ -164,3 +158,5 @@ const LoginComponent = () => {
     </Grid>
   );
 };
+
+export default Login;

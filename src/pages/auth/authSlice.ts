@@ -3,11 +3,11 @@ import { RootState } from '../../store';
 
 import { CounterState, User } from '../../types';
 
-const initialState = {
+const initialState: CounterState = {
   isAuthenticated: false,
   isInitialized: false,
   user: null
-} as CounterState;
+};
 
 export const authSlice = createSlice({
   name: 'auth',
