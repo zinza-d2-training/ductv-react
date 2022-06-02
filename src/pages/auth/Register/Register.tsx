@@ -43,13 +43,12 @@ const Register = () => {
     idCard: Yup.string()
       .required('CMND là bắt buộc')
       .matches(/^[0-9]+$/, 'CMND phải là dạng số ')
-      .min(8, 'CMND tối thiểu có 8 chữ số')
-      .max(12, 'CMND tối đa 12 chữ số'),
+      .matches(/^(\d{9}|\d{12})$/, 'CMND chỉ chứa 9 hoặc 12 số'),
     email: Yup.string()
       .required('Email là bắt buộc')
       .email('Email không hợp lệ'),
     password: Yup.string()
-      .trim('Mật khẩu không được chứa khoảng cách và khoảng trống')
+      .matches(/^\S*$/, 'Mật khẩu không được chứa khoảng cách và khoảng trống')
       .required('Password là bắt buộc')
       .min(8, 'Password phải ít nhất chứa 8 ký tự'),
     fullName: Yup.string().required('Họ Tên là bắt buộc'),

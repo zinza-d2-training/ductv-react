@@ -33,7 +33,10 @@ const Login = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
-      .trim('The password cannot include leading and trailing spaces')
+      .matches(
+        /^\S*$/,
+        'The password cannot include leading and trailing spaces'
+      )
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters')
   });
