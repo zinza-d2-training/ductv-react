@@ -33,7 +33,10 @@ const Login = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
     password: Yup.string()
-      .trim('The password cannot include leading and trailing spaces')
+      .matches(
+        /^\S*$/,
+        'The password cannot include leading and trailing spaces'
+      )
       .required('Password is required')
       .min(8, 'Password must be at least 8 characters')
   });
@@ -73,7 +76,7 @@ const Login = () => {
         <Box
           sx={{
             my: 8,
-            mx: 4,
+            mx: 15,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
@@ -84,7 +87,7 @@ const Login = () => {
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}>
+            sx={{ mt: 1, width: '500px' }}>
             <Controller
               control={control}
               name="email"
