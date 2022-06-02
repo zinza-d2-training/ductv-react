@@ -76,7 +76,7 @@ const Login = () => {
         <Box
           sx={{
             my: 8,
-            mx: 4,
+            mx: 15,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center'
@@ -87,7 +87,7 @@ const Login = () => {
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}>
+            sx={{ mt: 1, width: '500px' }}>
             <Controller
               control={control}
               name="email"

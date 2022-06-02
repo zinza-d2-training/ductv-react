@@ -105,7 +105,7 @@ const Register = () => {
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
-            sx={{ mt: 1 }}>
+            sx={{ mt: 1, width: '500px' }}>
             <Controller
               control={control}
               name="idCard"
