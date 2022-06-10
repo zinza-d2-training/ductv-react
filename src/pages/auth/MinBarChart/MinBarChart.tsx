@@ -8,6 +8,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Bar } from 'react-chartjs-2';
 import faker from 'faker';
 
@@ -24,13 +25,17 @@ export const options = {
     indexAxis: 'y' as const,
     elements: {
         bar: {
-            borderWidth: 2,
+            borderWidth: 1,
         },
     },
-    responsive: true,
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    },
     plugins: {
         legend: {
-            position: 'right' as const,
+            display: false
         },
         title: {
             display: false,
@@ -40,23 +45,29 @@ export const options = {
 
 const labels = ['Kiên Giang', 'Tây Ninh', 'Sóc Trăng', 'Hà Nội', 'Hậu Giang', 'Tiền Giang', 'An Giang', 'Bạc Liêu', 'Bà Rịa-Vũng Tàu'];
 
-export const data = {
+const data = {
     labels,
     datasets: [
         {
-            label: 'Dataset 1',
-            hidden: true,
-            data: labels.map(() => faker.datatype.number({ min: 0, max: 160 })),
+            datalabels: {
+                color: '#fff',
+                font: {
+                    weight: 'bold' as const,
+                }
+            },
+            label: 'tổng tiêm/ tỷ lệ phân bố',
+            display: true,
+            data: labels.map(() => faker.datatype.number({ min: 50, max: 160 })),
             borderColor: '#2f80ed',
             backgroundColor: '#2f80ed',
-            fill: '0'
+            fill: '0',
+            barThickness: 18,
         },
     ],
 };
 
 const MinBarChar = () => {
-    return <Bar options={options} data={data} />;
+    return <Bar options={options} data={data} plugins={[ChartDataLabels]} height={"300px"} />;
 }
-
 
 export default MinBarChar;

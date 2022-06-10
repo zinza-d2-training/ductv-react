@@ -124,8 +124,15 @@ function HomeContent() {
               borderRadius: '10px',
               padding: '24px',
               backgroundColor: '#fff',
+              height: '710px'
             }}>
+              <Typography component='h6' variant='h6' fontWeight={'bold'}>10 địa phương có tỷ lệ tiêm cao nhất</Typography>
+              <Typography component='p' variant='subtitle1'>(Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết định)</Typography>
               <MaxBarChart />
+              <Typography component='div' variant='body1' fontStyle="italic" textAlign="center" sx={{ my: 2 }}>
+                <Box component="span" sx={{ fontWeight: '700', fontSize: '15px', whiteSpace: 'nowrap' }}>Ghi chú:</Box>
+                <Box component="span" sx={{ fontSize: '15px' }}>Số mũi tiêm thực tế có thể nhiều hơn số liều vắc xin phân bổ</Box>
+              </Typography>
             </Stack>
           </Grid>
           <Grid item xs={6} sm={6} md={6} >
@@ -135,8 +142,15 @@ function HomeContent() {
               borderRadius: '10px',
               padding: '24px',
               backgroundColor: '#fff',
+              height: '710px'
             }}>
+              <Typography component='h6' variant='h6' fontWeight={'bold'}>10 địa phương có tỷ lệ tiêm thấp nhất</Typography>
+              <Typography component='p' variant='subtitle1'>(Tính theo số mũi tiêm/ số vắc xin phân bổ theo quyết định)</Typography>
               <MinBarChart />
+              <Typography component='div' variant='body1' fontStyle="italic" sx={{ my: 2 }}>
+                <Box component="span" sx={{ fontWeight: '700', fontSize: '15px', whiteSpace: 'nowrap' }}>Ghi chú:</Box>
+                <Box component="span" sx={{ fontSize: '15px' }}>Tỷ lệ tiêm tại một số tỉnh có thể thấp do chưa nhận đủ vắc xin theo quyết định phân bổ</Box>
+              </Typography>
             </Stack>
           </Grid>
         </Grid>
