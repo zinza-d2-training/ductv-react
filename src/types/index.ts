@@ -28,3 +28,13 @@ export interface UserCtx {
 export interface UserList extends User {
   username: string;
 }
+
+interface DataHref {
+  title: string,
+  link: string,
+  key: number
+}
+
+export interface DataLink {
+  data?: DataHref[];
+}
