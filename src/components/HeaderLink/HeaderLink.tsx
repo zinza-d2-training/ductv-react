@@ -9,19 +9,15 @@ import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { DataLink } from '../../types';
+import { LinkItem, LinkItemMultiple } from '../../types';
+import { Link as LinkRoute } from 'react-router-dom';
 
 export const HeaderLinkDropDown = ({
   id,
   idMenu,
   text,
   dataLink
-}: {
-  id: string;
-  idMenu: string;
-  text: string;
-  dataLink: DataLink;
-}) => {
+}: LinkItemMultiple) => {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
@@ -100,7 +96,10 @@ export const HeaderLinkDropDown = ({
                     fontWeight: '700'
                   }}>
                   {dataLink.data?.map((item) => (
-                    <MenuItem key={item.key} component="a" href={item.link}>
+                    <MenuItem
+                      key={item.key}
+                      component={LinkRoute}
+                      to={item.link}>
                       {item.title}
                     </MenuItem>
                   ))}
@@ -114,13 +113,14 @@ export const HeaderLinkDropDown = ({
   );
 };
 
-const HeaderLink = ({ text }: { text: string }) => {
+const HeaderLink = ({ text, url }: LinkItem) => {
   return (
     <Link
+      component={LinkRoute}
       variant="button"
       underline="none"
       color="inherit"
-      href="#"
+      to={url}
       sx={{ my: 1, mx: 1.5, textTransform: 'unset' }}>
       {text}
     </Link>

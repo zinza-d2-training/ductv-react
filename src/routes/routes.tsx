@@ -18,7 +18,13 @@ export const AllPages: RouteObject[] = [
   },
   {
     path: '/',
-    element: <Home />
+    element: <Layouts />,
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      }
+    ]
   },
   {
     path: '/login',

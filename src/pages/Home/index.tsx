@@ -8,13 +8,10 @@ import LineChart from '../../components/Home/LineChart/LineChart';
 import MinBarChart from '../../components/Home/MinBarChart/MinBarChart';
 import MaxBarChart from '../../components/Home/MaxBarChart/MaxBarChart';
 import SearchAddress from '../../components/Home/SearchAddress/SearchAddress';
-import Footer from '../../components/Home/Footer/Footer';
-import Header from '../../components/Home/Header/Header';
 
 function HomeContent() {
   return (
-    <React.Fragment>
-      <Header />
+    <>
       <Box
         sx={{
           mt: 15,
@@ -106,7 +103,7 @@ function HomeContent() {
             sx={{ textAlign: 'center', fontStyle: 'italic', mt: 1 }}>
             <Box component="span" fontWeight="bold">
               Thông báo
-            </Box>{' '}
+            </Box>
             : Bạn chưa có chứng nhận tiêm chủng hoặc thông tin bị sai. Hãy chọn
             chức năng 'Phản ánh thông tin' bên phải màn hình hoặc cập nhật thông
             tin tiêm tại đây
@@ -139,7 +136,7 @@ function HomeContent() {
                 height: '850px',
                 mx: 2
               }}>
-              <Typography component="h6" variant="h6" fontWeight={'bold'}>
+              <Typography component="h6" variant="h6" fontWeight="bold">
                 10 địa phương có tỷ lệ tiêm cao nhất
               </Typography>
               <Typography component="p" variant="subtitle1">
@@ -178,7 +175,7 @@ function HomeContent() {
                 height: '850px',
                 mx: 2
               }}>
-              <Typography component="h6" variant="h6" fontWeight={'bold'}>
+              <Typography component="h6" variant="h6" fontWeight="bold">
                 10 địa phương có tỷ lệ tiêm thấp nhất
               </Typography>
               <Typography component="p" variant="subtitle1">
@@ -209,8 +206,7 @@ function HomeContent() {
         </Grid>
       </Container>
       <SearchAddress />
-      <Footer />
-    </React.Fragment>
+    </>
   );
 }
 

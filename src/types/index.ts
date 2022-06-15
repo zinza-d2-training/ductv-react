@@ -80,3 +80,15 @@ export interface Column {
   minWidth?: number;
   align?: 'right' | 'center' | 'left';
 }
+
+export interface LinkItem {
+  text: string;
+  url: string;
+}
+
+export interface LinkItemMultiple {
+  id: string;
+  idMenu: string;
+  text: string;
+  dataLink: DataLink;
+}

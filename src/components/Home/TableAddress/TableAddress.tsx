@@ -69,8 +69,7 @@ export default function TableAddress() {
                 <TableCell
                   colSpan={8}
                   sx={{ textAlign: 'center', fontWeight: '700' }}>
-                  {' '}
-                  {'Không tìm thấy bản ghi nào'}
+                  Không tìm thấy bản ghi nào
                 </TableCell>
               </TableRow>
             )}

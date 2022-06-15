@@ -78,7 +78,7 @@ const MaxBarChar = () => {
       options={options}
       data={data}
       plugins={[ChartDataLabels]}
-      height={'300px'}
+      height="300px"
     />
   );
 };

@@ -21,30 +21,24 @@ const SearchAddress = () => {
   const [provinceData, setProvinceData] = useState<Province | null>(null);
   const [districtData, setDistrictData] = useState<District | null>(null);
   const [wardData, setWardData] = useState<Ward | null>(null);
-  const handleClick = () => {
-    const dataShow = dataTables.filter((item: DataTable) => {
-      if (districtData?.id === null) {
-        return item.province.id === provinceData?.id;
-      } else if (wardData?.id === null) {
-        return (
-          item.province.id === provinceData?.id &&
-          item.district.id === districtData?.id
-        );
-      } else {
-        return (
-          item.province.id === provinceData?.id &&
-          item.district.id === districtData?.id &&
-          item.ward.id === wardData?.id
-        );
-      }
-    });
-
-    dispatch(
-      search({
-        data: dataShow
-      })
-    );
-  };
+  const dataSearch = dataTables.filter((item: DataTable) => {
+    if (provinceData === null) {
+      return item;
+    } else if (districtData === null) {
+      return item.province.id === provinceData?.id;
+    } else if (wardData === null) {
+      return (
+        item.province.id === provinceData?.id &&
+        item.district.id === districtData?.id
+      );
+    } else {
+      return (
+        item.province.id === provinceData?.id &&
+        item.district.id === districtData?.id &&
+        item.ward.id === wardData?.id
+      );
+    }
+  });
 
   return (
     <Container maxWidth="xl" sx={{ mt: 2, pb: 6 }}>
@@ -58,7 +52,7 @@ const SearchAddress = () => {
           mx: 2
         }}>
         <Typography component="h5" variant="h5" fontWeight={700}>
-          {'Tra cứu điểm tiêm theo địa bàn'}
+          Tra cứu điểm tiêm theo địa bàn
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6} sm={6} md={3} lg={3}>
@@ -69,7 +63,7 @@ const SearchAddress = () => {
                 setDistrictData(null);
                 setWardData(null);
               }}
-              noOptionsText={'Không có dữ liệu'}
+              noOptionsText="Không có dữ liệu"
               options={dataAddress}
               getOptionLabel={(option) => option.name}
               renderInput={(params) => (
@@ -85,7 +79,7 @@ const SearchAddress = () => {
                 setDistrictData(value);
                 setWardData(null);
               }}
-              noOptionsText={'Không có dữ liệu'}
+              noOptionsText="Không có dữ liệu"
               disabled={!provinceData}
               options={provinceData?.districts || []}
               getOptionLabel={(option) => option.name}
@@ -100,7 +94,7 @@ const SearchAddress = () => {
               value={wardData}
               onChange={(event, value) => setWardData(value)}
               disabled={!districtData}
-              noOptionsText={'Không có dữ liệu'}
+              noOptionsText="Không có dữ liệu"
               options={districtData?.wards || []}
               getOptionLabel={(option) => option.name}
               renderInput={(params) => (
@@ -111,13 +105,12 @@ const SearchAddress = () => {
           <Grid item xs={6} sm={6} md={3} lg={3}>
             <Button
               variant="contained"
-              onClick={handleClick}
-              disabled={!provinceData}
+              onClick={() => dispatch(search({ data: dataSearch }))}
               fullWidth
               startIcon={<SearchIcon />}
               color="primary"
               sx={{ height: '100%' }}>
-              {'Tìm kiếm'}
+              Tìm kiếm
             </Button>
           </Grid>
         </Grid>

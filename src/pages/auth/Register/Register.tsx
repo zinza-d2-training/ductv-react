@@ -234,8 +234,8 @@ const Register = () => {
               variant="body1"
               textAlign="center"
               mt="5">
-              {'Bạn đã có tài khoản '}
-              <LinkRoute to="/login">{'Đăng Nhập'}</LinkRoute>
+              Bạn đã có tài khoản
+              <LinkRoute to="/login">Đăng Nhập</LinkRoute>
             </Typography>
           </Box>
         </Box>

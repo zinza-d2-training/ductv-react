@@ -78,7 +78,7 @@ const Header = () => {
             CỔNG THÔNG TIN TIÊM CHỦNG COVID-19
           </Typography>
           <Stack direction="row" spacing={2} alignItems="center">
-            <HeaderLink text="Trang chủ" />
+            <HeaderLink text="Trang chủ" url="#" />
             <HeaderLinkDropDown
               id="link-register"
               idMenu="link-register-menu"
@@ -91,7 +91,7 @@ const Header = () => {
               text="Tra cứu"
               dataLink={dataSearch}
             />
-            <HeaderLink text="Tài liệu" />
+            <HeaderLink text="Tài liệu" url="#" />
             {user?.name ? (
               <Box component="span" fontWeight={700} fontSize={20}>
                 {user?.name}
