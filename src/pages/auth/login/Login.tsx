@@ -142,7 +142,7 @@ const Login = () => {
             </LoadingButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <LinkRoute to="/forgot-password">{'Quên mật khẩu?'}</LinkRoute>
+                <LinkRoute to="/forgot-password">Quên mật khẩu?</LinkRoute>
               </Grid>
             </Grid>
             <Typography component="h4" variant="body1">

@@ -28,3 +28,67 @@ export interface UserCtx {
 export interface UserList extends User {
   username: string;
 }
+
+interface DataHref {
+  title: string;
+  link: string;
+  key: number;
+}
+
+export interface DataLink {
+  data?: DataHref[];
+}
+
+// Type for address
+export interface GeneralInfoAddress {
+  id: number;
+  name: string;
+}
+
+export interface Ward extends GeneralInfoAddress {}
+
+export interface District extends GeneralInfoAddress {
+  wards?: Ward[];
+}
+
+export interface Province extends GeneralInfoAddress {
+  districts?: District[] | null;
+}
+
+export interface DataTable {
+  index: number;
+  address: string;
+  street: string;
+  ward: Ward;
+  district: District;
+  province: Province;
+  boardMember: string;
+  countTableInjection: number;
+}
+
+export interface Column {
+  id:
+    | 'index'
+    | 'address'
+    | 'street'
+    | 'ward'
+    | 'district'
+    | 'province'
+    | 'boardMember'
+    | 'countTableInjection';
+  label: string;
+  minWidth?: number;
+  align?: 'right' | 'center' | 'left';
+}
+
+export interface LinkItem {
+  text: string;
+  url: string;
+}
+
+export interface LinkItemMultiple {
+  id: string;
+  idMenu: string;
+  text: string;
+  dataLink: DataLink;
+}

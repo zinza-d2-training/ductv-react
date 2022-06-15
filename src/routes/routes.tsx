@@ -14,6 +14,11 @@ export const AllPages: RouteObject[] = [
         <Layouts />
       </AuthGuard>
     ),
+    children: []
+  },
+  {
+    path: '/',
+    element: <Layouts />,
     children: [
       {
         path: '/',
