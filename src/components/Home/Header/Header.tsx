@@ -18,24 +18,9 @@ const Header = () => {
   const dataSearch: DataLink = {
     data: [
       {
-        title: 'Tra cứu chứng nhận tiêm',
-        link: '#',
+        title: 'Tra cứu đăng ký tiêm',
+        link: '/lookup-injection-registration',
         key: 1
-      },
-      {
-        title: 'Tra cứu kết quả đăng ký',
-        link: '#',
-        key: 2
-      },
-      {
-        title: 'Tra cứu Phản ánh',
-        link: '#',
-        key: 3
-      },
-      {
-        title: 'Tra cứu Hộ chiếu vắc xin',
-        link: '#',
-        key: 4
       }
     ]
   };

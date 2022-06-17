@@ -6,6 +6,7 @@ import Register from '../pages/auth/Register/Register';
 import Home from '../pages/Home';
 import AuthGuard from '../auth/AuthGuard';
 import Layouts from '../components/Layouts';
+import InjectionRegistration from '../pages/lookUp/injectionRegistraion';
 
 export const AllPages: RouteObject[] = [
   {
@@ -23,6 +24,9 @@ export const AllPages: RouteObject[] = [
       {
         path: '/',
         element: <Home />
+      }, {
+        path: '/lookup-injection-registration',
+        element: <InjectionRegistration />
       }
     ]
   },
